@@ -1,9 +1,8 @@
 /**
  * YOU STREAM - APLICACIÓN PRINCIPAL
  * ---------------------------------
- * Renderiza el catálogo estilo Gift Card (Gift Card Retail)
- * con ranura de colgar, perfiles, medalla de calidad, precios tachados
- * y botones duales [ Comprar ] y [ Renovar ] conectados a WhatsApp.
+ * Renderiza el catálogo de tarjetas usando los archivos de imagen
+ * ubicados en assets/cards/*.svg para cada plataforma.
  */
 
 import { CONFIG, getActiveWhatsAppNumber, buildWhatsAppUrl } from './config.js';
@@ -71,31 +70,6 @@ const dom = {
   openTermsBtn: document.getElementById('openTermsBtn'),
   openPrivacyBtn: document.getElementById('openPrivacyBtn')
 };
-
-// SVG de la Medalla Dorada de Calidad
-const GOLD_MEDAL_SVG = `
-<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="14" cy="12" r="9" fill="url(#gold_grad)" stroke="#FFFFFF" stroke-width="1.2"/>
-  <polygon points="14,6.5 15.8,10.2 19.8,10.8 16.9,13.6 17.6,17.5 14,15.6 10.4,17.5 11.1,13.6 8.2,10.8 12.2,10.2" fill="#FFFFFF"/>
-  <path d="M10 19 L8 26 L14 23 L20 26 L18 19" fill="url(#gold_ribbon)"/>
-  <defs>
-    <linearGradient id="gold_grad" x1="5" y1="3" x2="23" y2="21" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#FFE082"/>
-      <stop offset="0.5" stop-color="#FFD54F"/>
-      <stop offset="1" stop-color="#FFB300"/>
-    </linearGradient>
-    <linearGradient id="gold_ribbon" x1="8" y1="19" x2="20" y2="26" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#FFA000"/>
-      <stop offset="1" stop-color="#FF6F00"/>
-    </linearGradient>
-  </defs>
-</svg>`;
-
-// SVG del Ícono de Perfil / Pantalla
-const PROFILE_USER_SVG = `
-<svg viewBox="0 0 24 24" fill="currentColor">
-  <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
-</svg>`;
 
 /**
  * Inicialización al cargar el DOM
@@ -230,7 +204,7 @@ function initSearch() {
 }
 
 /**
- * Renderiza el catálogo estilo GIFT CARD según la imagen de referencia
+ * Renderiza el catálogo de tarjetas Gift Cards con imágenes reales
  */
 function renderCatalog() {
   if (!dom.platformsGrid) return;
@@ -277,31 +251,9 @@ function renderCatalog() {
     card.className = `gift-card-item ${!isAvailable ? 'unavailable' : ''}`;
 
     card.innerHTML = `
-      <!-- Cara superior de la Gift Card (con ranura, perfiles y medalla) -->
-      <div class="gift-card-face" style="background: ${platform.cardBg}; cursor: pointer;" title="Haz clic para ver detalles y condiciones">
-        <!-- Ranura superior para colgar en expositor (Pegboard Slot) -->
-        <div class="gift-card-hanger-slot" aria-hidden="true"></div>
-
-        <!-- Indicador de perfiles / pantallas (Top Left) -->
-        <div class="gift-card-profile-badge" aria-label="${platform.profilesCount} pantalla(s)">
-          ${PROFILE_USER_SVG}
-          <span>${platform.profilesCount}</span>
-        </div>
-
-        <!-- Medalla de calidad dorada (Top Right) -->
-        <div class="gift-card-medal-badge" aria-hidden="true">
-          ${GOLD_MEDAL_SVG}
-        </div>
-
-        <!-- Watermark "You STREAMING" (Bottom Left) -->
-        <div class="gift-card-watermark" aria-hidden="true">
-          <span>You</span> STREAMING
-        </div>
-
-        <!-- Logotipo oficial centrado -->
-        <div class="gift-card-center-logo">
-          ${platform.logoSvg}
-        </div>
+      <!-- Imagen de la tarjeta con ranura de colgar, perfiles y medalla -->
+      <div class="gift-card-face-wrapper" style="cursor: pointer;" title="Haz clic para ver detalles y condiciones">
+        <img src="${platform.cardImage}" alt="${platform.title}" class="gift-card-img" loading="lazy" />
       </div>
 
       <!-- Sección inferior con título, precios y botones duales -->
@@ -324,8 +276,8 @@ function renderCatalog() {
       </div>
     `;
 
-    // Abrir modal de detalles al pulsar en la cara de la gift card o título
-    const faceEl = card.querySelector('.gift-card-face');
+    // Abrir modal de detalles al pulsar en la imagen o título
+    const faceEl = card.querySelector('.gift-card-face-wrapper');
     const titleEl = card.querySelector('.gift-card-title');
     [faceEl, titleEl].forEach(el => {
       el.addEventListener('click', () => openPlansModal(platform));
@@ -338,7 +290,7 @@ function renderCatalog() {
 function openPlansModal(platform) {
   state.activePlatform = platform;
 
-  dom.modalPlatformLogo.innerHTML = platform.logoSvg;
+  dom.modalPlatformLogo.innerHTML = `<img src="${platform.cardImage}" alt="${platform.name}" style="width: 54px; height: 42px; object-fit: cover; border-radius: 6px;" />`;
   dom.modalPlatformName.textContent = platform.name;
   dom.modalCategoryBadge.textContent = platform.categoryLabel;
   dom.modalAvailabilityBadge.textContent = platform.availabilityLabel;

@@ -1,12 +1,7 @@
 /**
  * CATÁLOGO DE PLATAFORMAS Y PLANES (ESTILO GIFT CARD YOU STREAM)
  * -------------------------------------------------------------
- * Modelado según el catálogo comercial de referencia:
- * - Tarjetas tipo Gift Card con ranura de colgar (pegboard slot)
- * - Indicador de perfiles / pantallas (👤 1, 👤 2, 👤 4, 👤 6, 👤 7)
- * - Sello dorado de calidad (roseta / medalla)
- * - Precios tachados (original en rojo) y precio de oferta en Soles (S/)
- * - Botones duales: [ Comprar ] (Verde) y [ Renovar ] (Azul)
+ * Cada tarjeta apunta a su archivo de imagen en assets/cards/*.svg
  */
 
 export const CATEGORIES = [
@@ -24,25 +19,17 @@ export const PLATFORMS_DATA = [
     name: "Crunchyroll",
     category: "anime",
     categoryLabel: "Anime",
-    cardType: "gift_card",
+    cardImage: "assets/cards/crunchyroll.svg",
     profilesCount: 1,
     title: "x1 Perfil Crunchyroll Mega Fan",
     shortDescription: "La mayor biblioteca de anime con estrenos simultáneos con Japón (Simulcast) sin publicidad.",
     fullDescription: "Acceso ilimitado a episodios en Full HD 1080p, descargas sin conexión y catálogo completo de anime sin cortes.",
     brandColor: "#FF6600",
-    cardBg: "linear-gradient(145deg, #FF7700 0%, #E65100 100%)",
-    cardTextColor: "#FFFFFF",
     originalPrice: 10.00,
     offerPrice: 7.00,
     currency: "S/",
     availability: "available",
     availabilityLabel: "Disponible",
-    logoSvg: `<svg viewBox="0 0 300 100" width="160" height="50" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="50" cy="50" r="32" fill="#FFFFFF"/>
-      <path d="M50 24C64.3 24 76 35.7 76 50C76 64.3 64.3 76 50 76C41.6 76 34.2 72 29.3 65.8C36.4 65.8 42.2 60 42.2 52.9C42.2 45.8 36.4 40 29.3 40C33.5 30.7 41.1 24 50 24Z" fill="#FF6600"/>
-      <circle cx="61" cy="44" r="5" fill="#FFFFFF"/>
-      <text x="96" y="59" fill="#FFFFFF" font-family="'Outfit', sans-serif" font-size="28" font-weight="800" letter-spacing="-0.5">Crunchyroll</text>
-    </svg>`,
     plans: [
       {
         id: "crunchy-1p",
@@ -62,23 +49,17 @@ export const PLATFORMS_DATA = [
     name: "Movistar TV",
     category: "sports",
     categoryLabel: "Deportes & En Vivo",
-    cardType: "gift_card",
+    cardImage: "assets/cards/movistar_tv.svg",
     profilesCount: 1,
     title: "x1 Cuenta Movistar TV + GOL PERÚ",
     shortDescription: "Canales en vivo de televisión nacional y señal deportiva exclusiva con GOL PERÚ.",
     fullDescription: "Transmisiones en vivo de la Liga Peruana, eventos deportivos, noticias y canales de entretenimiento.",
     brandColor: "#00A9E0",
-    cardBg: "linear-gradient(145deg, #00A9E0 0%, #0077A8 100%)",
-    cardTextColor: "#FFFFFF",
     originalPrice: 28.00,
     offerPrice: 25.00,
     currency: "S/",
     availability: "available",
     availabilityLabel: "Disponible",
-    logoSvg: `<svg viewBox="0 0 300 100" width="160" height="50" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M30 65C30 45 42 35 55 52C65 65 75 65 85 52C98 35 110 45 110 65" stroke="#FFFFFF" stroke-width="16" stroke-linecap="round"/>
-      <text x="125" y="62" fill="#FFFFFF" font-family="'Outfit', sans-serif" font-size="34" font-weight="800">Tv</text>
-    </svg>`,
     plans: [
       {
         id: "movistar-cuenta",
@@ -98,23 +79,17 @@ export const PLATFORMS_DATA = [
     name: "Disney+",
     category: "movies",
     categoryLabel: "Películas & Series",
-    cardType: "gift_card",
+    cardImage: "assets/cards/disney_plus.svg",
     profilesCount: 1,
     title: "x1 Perfil Disney Premium, ESPN, STAR+",
     shortDescription: "Disney, Pixar, Marvel, Star Wars y todos los eventos deportivos en vivo de ESPN.",
     fullDescription: "Catálogo completo con perfil personal con PIN, calidad 4K UHD, Dolby Atmos y señales en directo de ESPN.",
     brandColor: "#0C2B68",
-    cardBg: "linear-gradient(145deg, #0C2B68 0%, #06173B 100%)",
-    cardTextColor: "#FFFFFF",
     originalPrice: 15.00,
     offerPrice: 12.00,
     currency: "S/",
     availability: "available",
     availabilityLabel: "Disponible",
-    logoSvg: `<svg viewBox="0 0 300 100" width="160" height="50" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <text x="35" y="62" fill="#FFFFFF" font-family="'Outfit', sans-serif" font-size="36" font-weight="800" font-style="italic">Disney+</text>
-      <path d="M25 35 C 90 20, 160 30, 200 45" stroke="#67E8F9" stroke-width="3" fill="none" stroke-linecap="round"/>
-    </svg>`,
     plans: [
       {
         id: "disney-perfil-prem",
@@ -134,24 +109,17 @@ export const PLATFORMS_DATA = [
     name: "YouTube",
     category: "music",
     categoryLabel: "Música & Audio",
-    cardType: "gift_card",
+    cardImage: "assets/cards/youtube_premium.svg",
     profilesCount: 1,
     title: "x1 Cuenta YouTube Premium Individual",
     shortDescription: "Videos sin publicidad, reproducción en segundo plano y YouTube Music Premium incluido.",
     fullDescription: "Actívalo en tu propia cuenta de correo electrónico. Disfruta videos sin pausas y música con pantalla apagada.",
     brandColor: "#FFFFFF",
-    cardBg: "linear-gradient(145deg, #FFFFFF 0%, #F1F1F1 100%)",
-    cardTextColor: "#111111",
     originalPrice: 10.00,
     offerPrice: 7.00,
     currency: "S/",
     availability: "available",
     availabilityLabel: "Disponible",
-    logoSvg: `<svg viewBox="0 0 300 100" width="160" height="50" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="25" y="26" width="60" height="42" rx="10" fill="#FF0000"/>
-      <polygon points="50,38 68,47 50,56" fill="#FFFFFF"/>
-      <text x="96" y="58" fill="#111111" font-family="'Outfit', sans-serif" font-size="28" font-weight="800" letter-spacing="-0.5">Premium</text>
-    </svg>`,
     plans: [
       {
         id: "yt-indiv",
@@ -171,22 +139,17 @@ export const PLATFORMS_DATA = [
     name: "HBO Max",
     category: "movies",
     categoryLabel: "Películas & Series",
-    cardType: "gift_card",
+    cardImage: "assets/cards/hbo_max.svg",
     profilesCount: 1,
     title: "x1 Perfil HBO MAX Estandar",
     shortDescription: "Producciones de HBO, estrenos del cine de Warner Bros, universo DC y series galardonadas.",
     fullDescription: "House of the Dragon, The Last of Us, Succession y los mayores éxitos cinematográficos en calidad Full HD.",
     brandColor: "#471285",
-    cardBg: "linear-gradient(145deg, #471285 0%, #2A0854 100%)",
-    cardTextColor: "#FFFFFF",
     originalPrice: 10.00,
     offerPrice: 7.00,
     currency: "S/",
     availability: "available",
     availabilityLabel: "Disponible",
-    logoSvg: `<svg viewBox="0 0 300 100" width="160" height="50" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <text x="35" y="62" fill="#FFFFFF" font-family="'Outfit', sans-serif" font-size="34" font-weight="800">HBO max</text>
-    </svg>`,
     plans: [
       {
         id: "hbo-1p",
@@ -206,24 +169,17 @@ export const PLATFORMS_DATA = [
     name: "DirecTV GO",
     category: "sports",
     categoryLabel: "Deportes & En Vivo",
-    cardType: "gift_card",
+    cardImage: "assets/cards/directv_go.svg",
     profilesCount: 1,
     title: "x1 Perfil DirecTVGO + LIGA 1 MAX",
     shortDescription: "Todos los partidos de la Liga 1 Te Apuesto en vivo, torneos internacionales y canales en directo.",
     fullDescription: "Disfruta de la Liga 1 MAX en alta definición, canales en vivo de noticias, cine y deportes por streaming.",
     brandColor: "#041A3A",
-    cardBg: "linear-gradient(145deg, #0A192F 0%, #030C19 100%)",
-    cardTextColor: "#FFFFFF",
     originalPrice: 32.00,
     offerPrice: 29.00,
     currency: "S/",
     availability: "available",
     availabilityLabel: "Disponible",
-    logoSvg: `<svg viewBox="0 0 300 100" width="160" height="50" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M35 25 C 55 25, 75 35, 75 50 C 75 65, 55 75, 35 75 Z" fill="#00A9E0"/>
-      <path d="M48 37 C 60 37, 63 43, 63 50 C 63 57, 60 63, 48 63 Z" fill="#0A192F"/>
-      <text x="86" y="62" fill="#FF7700" font-family="'Outfit', sans-serif" font-size="34" font-weight="800">GO</text>
-    </svg>`,
     plans: [
       {
         id: "dgo-liga1",
@@ -243,23 +199,17 @@ export const PLATFORMS_DATA = [
     name: "Canva PRO",
     category: "tools",
     categoryLabel: "Productividad & IA",
-    cardType: "gift_card",
+    cardImage: "assets/cards/canva_pro.svg",
     profilesCount: 1,
     title: "x1 Perfil Canva PRO",
     shortDescription: "Herramienta de diseño profesional con acceso a millones de plantillas premium y magia de IA.",
     fullDescription: "Acceso completo a fotos, elementos, quita fondos automático, redimensionamiento mágico y tipografías pro.",
     brandColor: "#00C4CC",
-    cardBg: "linear-gradient(145deg, #00C4CC 0%, #008899 100%)",
-    cardTextColor: "#FFFFFF",
     originalPrice: 19.00,
     offerPrice: 16.00,
     currency: "S/",
     availability: "available",
     availabilityLabel: "Disponible",
-    logoSvg: `<svg viewBox="0 0 300 100" width="160" height="50" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M190 28 L197 40 L212 36 L202 48 L214 55 L186 55 Z" fill="#FFD700"/>
-      <text x="45" y="64" fill="#FFFFFF" font-family="'Outfit', sans-serif" font-size="34" font-weight="800" font-style="italic">Canva</text>
-    </svg>`,
     plans: [
       {
         id: "canva-pro-plan",
@@ -279,23 +229,17 @@ export const PLATFORMS_DATA = [
     name: "Paramount+",
     category: "movies",
     categoryLabel: "Películas & Series",
-    cardType: "gift_card",
+    cardImage: "assets/cards/paramount_plus.svg",
     profilesCount: 6,
     title: "C. Completa Paramount+ (6)",
     shortDescription: "Cuenta completa con 6 pantallas simultáneas. Cine, series de Showtime y contenido familiar.",
     fullDescription: "Disfruta de películas de Paramount Pictures, Halo, Star Trek, contenido Nickelodeon y torneos selectos.",
     brandColor: "#0064FF",
-    cardBg: "linear-gradient(145deg, #0064FF 0%, #003DA5 100%)",
-    cardTextColor: "#FFFFFF",
     originalPrice: 28.00,
     offerPrice: 25.00,
     currency: "S/",
     availability: "available",
     availabilityLabel: "Disponible",
-    logoSvg: `<svg viewBox="0 0 300 100" width="160" height="50" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M60 25 L85 68 H35 Z" fill="#FFFFFF"/>
-      <text x="96" y="60" fill="#FFFFFF" font-family="'Outfit', sans-serif" font-size="28" font-weight="800">Paramount+</text>
-    </svg>`,
     plans: [
       {
         id: "paramount-6p",
@@ -315,22 +259,17 @@ export const PLATFORMS_DATA = [
     name: "HBO Max Platino",
     category: "movies",
     categoryLabel: "Películas & Series",
-    cardType: "gift_card",
+    cardImage: "assets/cards/hbo_platino.svg",
     profilesCount: 2,
     title: "C. Completa HBOMAX Platino (2) - NO DISPONIBLE",
     shortDescription: "Cuenta completa Platino 4K UHD con 2 pantallas simultáneas y audio Dolby Atmos.",
     fullDescription: "Máxima resolución y audio inmersivo para televisores y salas de cine en casa. Consultar reposición de cupos.",
     brandColor: "#320B5C",
-    cardBg: "linear-gradient(145deg, #320B5C 0%, #190533 100%)",
-    cardTextColor: "#FFFFFF",
     originalPrice: 102.00,
     offerPrice: 99.00,
     currency: "S/",
     availability: "low_stock",
     availabilityLabel: "No disponible",
-    logoSvg: `<svg viewBox="0 0 300 100" width="160" height="50" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <text x="35" y="62" fill="#FFFFFF" font-family="'Outfit', sans-serif" font-size="34" font-weight="800">HBO max</text>
-    </svg>`,
     plans: [
       {
         id: "hbo-platino-2p",
@@ -350,22 +289,17 @@ export const PLATFORMS_DATA = [
     name: "Disney+ Completa",
     category: "movies",
     categoryLabel: "Películas & Series",
-    cardType: "gift_card",
+    cardImage: "assets/cards/disney_completa.svg",
     profilesCount: 7,
     title: "C. Completa Disney + Star, ESPN (7)",
     shortDescription: "Cuenta completa con hasta 7 perfiles familiares independientes y señales en vivo.",
     fullDescription: "Ideal para toda la familia o amigos. Todos los contenidos de Disney, Pixar, Marvel, Star y transmisiones ESPN.",
     brandColor: "#0B2545",
-    cardBg: "linear-gradient(145deg, #0B2545 0%, #041021 100%)",
-    cardTextColor: "#FFFFFF",
     originalPrice: 43.00,
     offerPrice: 40.00,
     currency: "S/",
     availability: "available",
     availabilityLabel: "Disponible",
-    logoSvg: `<svg viewBox="0 0 300 100" width="160" height="50" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <text x="35" y="62" fill="#FFFFFF" font-family="'Outfit', sans-serif" font-size="36" font-weight="800" font-style="italic">Disney+</text>
-    </svg>`,
     plans: [
       {
         id: "disney-7p",
@@ -385,24 +319,17 @@ export const PLATFORMS_DATA = [
     name: "ChatGPT Plus",
     category: "tools",
     categoryLabel: "Productividad & IA",
-    cardType: "gift_card",
+    cardImage: "assets/cards/chatgpt_plus.svg",
     profilesCount: 1,
     title: "x1 Cuenta Chat GTP plus (GPT-4o)",
     shortDescription: "Acceso ilimitado al modelo más potente GPT-4o, análisis avanzado de datos, voz y generación visual con DALL·E.",
     fullDescription: "La herramienta líder en productividad académica y laboral. Respuestas ultra rápidas y navegación web en tiempo real.",
     brandColor: "#10A37F",
-    cardBg: "linear-gradient(145deg, #10A37F 0%, #075E48 100%)",
-    cardTextColor: "#FFFFFF",
     originalPrice: 45.00,
     offerPrice: 35.00,
     currency: "S/",
     availability: "available",
     availabilityLabel: "Disponible",
-    logoSvg: `<svg viewBox="0 0 300 100" width="160" height="50" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="50" cy="50" r="28" stroke="#FFFFFF" stroke-width="4" fill="none"/>
-      <path d="M50 30 L50 70 M30 50 L70 50" stroke="#FFFFFF" stroke-width="4"/>
-      <text x="88" y="58" fill="#FFFFFF" font-family="'Outfit', sans-serif" font-size="24" font-weight="800">Chat GTP plus</text>
-    </svg>`,
     plans: [
       {
         id: "chatgpt-plan",
@@ -422,22 +349,17 @@ export const PLATFORMS_DATA = [
     name: "Netflix",
     category: "movies",
     categoryLabel: "Películas & Series",
-    cardType: "gift_card",
+    cardImage: "assets/cards/netflix.svg",
     profilesCount: 1,
     title: "x1 Perfil Netflix 4K UHD Original",
     shortDescription: "La plataforma número uno en series exclusivas, películas globales y estrenos en Ultra HD 4K.",
     fullDescription: "Perfil exclusivo protegido con PIN personal, reproducción 4K con audio espacial y recomendaciones propias.",
     brandColor: "#E50914",
-    cardBg: "linear-gradient(145deg, #1A0406 0%, #000000 100%)",
-    cardTextColor: "#FFFFFF",
     originalPrice: 15.00,
     offerPrice: 12.00,
     currency: "S/",
     availability: "available",
     availabilityLabel: "Disponible",
-    logoSvg: `<svg viewBox="0 0 300 100" width="160" height="50" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <text x="35" y="64" fill="#E50914" font-family="'Outfit', sans-serif" font-size="38" font-weight="900" letter-spacing="1">NETFLIX</text>
-    </svg>`,
     plans: [
       {
         id: "netflix-1p",
@@ -457,24 +379,17 @@ export const PLATFORMS_DATA = [
     name: "Spotify Premium",
     category: "music",
     categoryLabel: "Música & Audio",
-    cardType: "gift_card",
+    cardImage: "assets/cards/spotify.svg",
     profilesCount: 1,
     title: "x1 Cuenta Spotify Premium Sin Anuncios",
     shortDescription: "Toda tu música favorita, listas ilimitadas, audio de alta calidad y descargas offline sin anuncios.",
     fullDescription: "Escucha a tus artistas preferidos, reproduce canciones en el orden que desees y disfruta sin pausas comerciales.",
     brandColor: "#1DB954",
-    cardBg: "linear-gradient(145deg, #1DB954 0%, #10662E 100%)",
-    cardTextColor: "#FFFFFF",
     originalPrice: 12.00,
     offerPrice: 8.50,
     currency: "S/",
     availability: "available",
     availabilityLabel: "Disponible",
-    logoSvg: `<svg viewBox="0 0 300 100" width="160" height="50" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="50" cy="50" r="26" fill="#FFFFFF"/>
-      <path d="M38 43 C46 40 58 41 64 45 M40 50 C46 48 55 49 61 53 M42 57 C47 55 54 56 59 59" stroke="#1DB954" stroke-width="4" stroke-linecap="round"/>
-      <text x="86" y="58" fill="#FFFFFF" font-family="'Outfit', sans-serif" font-size="28" font-weight="800">Spotify</text>
-    </svg>`,
     plans: [
       {
         id: "spotify-indiv",
@@ -493,7 +408,7 @@ export const PLATFORMS_DATA = [
 export const HOW_IT_WORKS_STEPS = [
   {
     stepNumber: "01",
-    title: "Explora las tarjetas del catálogo",
+    title: "Explora las tarjetas de la tienda",
     description: "Revisa las plataformas, cantidad de pantallas y precios en oferta. Puedes usar los filtros por categoría o el buscador.",
     iconSvg: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="11" cy="11" r="8"></circle>

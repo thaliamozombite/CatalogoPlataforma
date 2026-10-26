@@ -13,8 +13,8 @@
   --bg-surface: #0c0e14;
   --bg-surface-elevated: #131722;
   --bg-surface-hover: #1b2030;
-  --bg-glass: rgba(10, 12, 18, 0.82);
-  --bg-card: #0b0d13;
+  --bg-glass: rgba(10, 12, 18, 0.85);
+  --bg-card: #090b10;
 
   /* Borders */
   --border-subtle: rgba(255, 255, 255, 0.08);
@@ -61,7 +61,7 @@
 
   /* Shadows */
   --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.6);
-  --shadow-card-hover: 0 16px 40px rgba(0, 176, 255, 0.25);
+  --shadow-card-hover: 0 16px 40px rgba(0, 176, 255, 0.3);
   --shadow-btn-buy: 0 4px 16px rgba(0, 230, 118, 0.4);
   --shadow-btn-renew: 0 4px 16px rgba(0, 176, 255, 0.4);
 
@@ -70,7 +70,7 @@
   --transition-normal: 0.26s cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Layout */
-  --container-max: 1280px;
+  --container-max: 1320px;
   --nav-height: 74px;
 }
 
@@ -98,16 +98,16 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Atmospheric Glow Background matching the reference screenshot */
+/* Atmospheric Neon Aura in Background */
 body::before {
   content: '';
   position: fixed;
   top: -100px;
   left: 50%;
   transform: translateX(-50%);
-  width: 800px;
-  height: 450px;
-  background: radial-gradient(circle, rgba(0, 176, 255, 0.28) 0%, rgba(0, 114, 255, 0.15) 35%, transparent 70%);
+  width: 900px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(0, 176, 255, 0.32) 0%, rgba(0, 114, 255, 0.18) 35%, transparent 70%);
   filter: blur(80px);
   z-index: -1;
   pointer-events: none;
@@ -120,7 +120,7 @@ body::after {
   right: -5vw;
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.18) 0%, rgba(217, 70, 239, 0.08) 50%, transparent 75%);
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.22) 0%, rgba(217, 70, 239, 0.08) 50%, transparent 75%);
   filter: blur(100px);
   z-index: -1;
   pointer-events: none;
@@ -132,13 +132,12 @@ body::after {
   left: -5vw;
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(255, 23, 68, 0.15) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 23, 68, 0.18) 0%, transparent 70%);
   filter: blur(100px);
   z-index: -1;
   pointer-events: none;
 }
 
-/* --- Typography Utilities --- */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   color: var(--text-primary);
@@ -170,7 +169,7 @@ button {
 }
 
 /* ==========================================================================
-   NAVIGATION BAR (YOU STREAM STYLE)
+   NAVIGATION BAR (YOU STREAM)
    ========================================================================== */
 .site-header {
   position: sticky;
@@ -199,17 +198,15 @@ button {
   height: 100%;
 }
 
-/* Logo "You stream" matching the reference screenshot */
 .brand-link {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  text-decoration: none;
 }
 
 .brand-you-text {
   font-family: var(--font-script);
-  font-size: 2.1rem;
+  font-size: 2.3rem;
   font-weight: 700;
   color: #ffffff;
   line-height: 1;
@@ -231,13 +228,12 @@ button {
 
 .brand-stream-text {
   font-family: var(--font-heading);
-  font-size: 1.5rem;
+  font-size: 1.55rem;
   font-weight: 800;
   color: #ffffff;
   letter-spacing: -0.02em;
 }
 
-/* Navigation items like reference: Inicio, Tienda */
 .nav-menu {
   display: flex;
   align-items: center;
@@ -251,9 +247,9 @@ button {
   align-items: center;
   justify-content: center;
   gap: 0.2rem;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.15rem;
   border-radius: var(--radius-sm);
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 600;
   color: var(--text-secondary);
   transition: all var(--transition-fast);
@@ -264,9 +260,9 @@ button {
 }
 
 .nav-item-box.active-tab {
-  background: linear-gradient(180deg, rgba(225, 29, 72, 0.85) 0%, rgba(159, 18, 57, 0.95) 100%);
+  background: linear-gradient(180deg, rgba(225, 29, 72, 0.9) 0%, rgba(159, 18, 57, 0.95) 100%);
   color: #ffffff;
-  box-shadow: 0 4px 15px rgba(225, 29, 72, 0.4);
+  box-shadow: 0 4px 18px rgba(225, 29, 72, 0.45);
 }
 
 .nav-item-box svg {
@@ -280,7 +276,6 @@ button {
   gap: 0.85rem;
 }
 
-/* Mobile Toggle */
 .mobile-toggle-btn {
   display: none;
   width: 40px;
@@ -601,7 +596,7 @@ button {
 }
 
 /* ==========================================================================
-   GIFT CARDS GRID (EXACTLY LIKE USER SCREENSHOT)
+   GIFT CARDS GRID (EXACTLY LIKE REFERENCE SCREENSHOT)
    ========================================================================== */
 .gift-cards-grid {
   display: grid;
@@ -641,123 +636,48 @@ button {
 .gift-card-item {
   display: flex;
   flex-direction: column;
-  background: #090b10;
+  background: var(--bg-card);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-card);
   overflow: hidden;
   box-shadow: var(--shadow-card);
   transition: transform var(--transition-normal), box-shadow var(--transition-normal), border-color var(--transition-normal);
   position: relative;
+  padding: 4px;
 }
 
 .gift-card-item:hover {
   transform: translateY(-6px);
-  border-color: rgba(0, 176, 255, 0.4);
+  border-color: rgba(0, 176, 255, 0.45);
   box-shadow: var(--shadow-card-hover);
 }
 
-/* Top Card Artwork Face */
-.gift-card-face {
+/* Contenedor de la Imagen de la Gift Card */
+.gift-card-face-wrapper {
   position: relative;
-  aspect-ratio: 1.15 / 1;
-  border-radius: calc(var(--radius-card) - 4px);
-  margin: 4px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
-  padding: 1.25rem 0.75rem;
-}
-
-/* Pegboard Slot (Hanging Hole Cutout at Top Center) */
-.gift-card-hanger-slot {
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 42px;
-  height: 9px;
-  background: rgba(0, 0, 0, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: var(--radius-pill);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.8);
-  z-index: 2;
-}
-
-/* Screen / Profile Count Badge (Top Left) */
-.gift-card-profile-badge {
-  position: absolute;
-  top: 10px;
-  left: 12px;
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: 1.05rem;
-  color: #ffffff;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-  z-index: 2;
-}
-
-.gift-card-profile-badge svg {
-  width: 18px;
-  height: 18px;
-  fill: #ffffff;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.6));
-}
-
-/* Golden Rosette Medal Badge (Top Right) */
-.gift-card-medal-badge {
-  position: absolute;
-  top: 9px;
-  right: 12px;
-  width: 26px;
-  height: 26px;
-  z-index: 2;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
-}
-
-/* Watermark: You STREAMING (Bottom Left of Face) */
-.gift-card-watermark {
-  position: absolute;
-  bottom: 8px;
-  left: 12px;
-  font-size: 0.65rem;
-  font-weight: 800;
-  color: rgba(255, 255, 255, 0.55);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  z-index: 2;
-  user-select: none;
-}
-
-.gift-card-watermark span {
-  font-family: var(--font-script);
-  font-size: 0.85rem;
-  text-transform: none;
-}
-
-/* Center Logo on the Face */
-.gift-card-center-logo {
-  max-width: 85%;
-  max-height: 60%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
-}
-
-.gift-card-center-logo svg {
   width: 100%;
-  height: auto;
-  max-height: 55px;
+  aspect-ratio: 1.25 / 1;
+  border-radius: calc(var(--radius-card) - 4px);
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+  background: #000000;
 }
 
-/* Bottom Information Box */
+.gift-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--transition-fast);
+}
+
+.gift-card-item:hover .gift-card-img {
+  transform: scale(1.02);
+}
+
+/* Sección de Información Inferior */
 .gift-card-info-box {
-  padding: 0.85rem 0.85rem 1rem;
+  padding: 0.85rem 0.5rem 0.75rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -766,7 +686,6 @@ button {
   flex: 1;
 }
 
-/* Title text: e.g. x1 Perfil Crunchyroll Mega Fan */
 .gift-card-title {
   font-size: 0.82rem;
   font-weight: 700;
@@ -779,7 +698,7 @@ button {
   overflow: hidden;
 }
 
-/* Pricing Row with Crossed-out Red original price and White Offer price */
+/* Precio tachado en rojo y precio de oferta en blanco */
 .gift-card-price-row {
   display: flex;
   align-items: baseline;
@@ -802,7 +721,7 @@ button {
   color: #ffffff;
 }
 
-/* Dual Action Buttons Row: [ Comprar ] [ Renovar ] */
+/* Botones Duales [ Comprar ] y [ Renovar ] */
 .gift-card-actions-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -854,8 +773,7 @@ button {
   box-shadow: 0 6px 18px rgba(0, 176, 255, 0.6);
 }
 
-/* Unavailable Card Styling */
-.gift-card-item.unavailable .gift-card-face {
+.gift-card-item.unavailable .gift-card-face-wrapper {
   filter: grayscale(40%) opacity(0.85);
 }
 
@@ -1177,7 +1095,6 @@ button {
   gap: 1.25rem;
 }
 
-/* Toast */
 .toast-container {
   position: fixed;
   bottom: 2rem;
@@ -1201,7 +1118,6 @@ button {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
 }
 
-/* Config Modal */
 .config-input-group {
   display: flex;
   flex-direction: column;

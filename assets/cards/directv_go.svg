@@ -1,0 +1,48 @@
+<svg viewBox="0 0 400 320" width="400" height="320" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fondo Azul Oscuro DirecTV GO -->
+  <defs>
+    <linearGradient id="bg_dgo" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#071933"/>
+      <stop offset="100%" stop-color="#020914"/>
+    </linearGradient>
+    <linearGradient id="gold_grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFE082"/>
+      <stop offset="50%" stop-color="#FFD54F"/>
+      <stop offset="100%" stop-color="#FFA000"/>
+    </linearGradient>
+    <linearGradient id="gold_ribbon" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFA000"/>
+      <stop offset="100%" stop-color="#FF6F00"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="400" height="320" rx="20" fill="url(#bg_dgo)"/>
+
+  <!-- Ranura de colgar -->
+  <rect x="170" y="16" width="60" height="12" rx="6" fill="#000000" fill-opacity="0.45" stroke="#FFFFFF" stroke-opacity="0.25" stroke-width="1.5"/>
+
+  <!-- Perfiles (👤 1) -->
+  <g transform="translate(20, 14)">
+    <path d="M8 8c1.8 0 3.2-1.4 3.2-3.2S9.8 1.6 8 1.6 4.8 3 4.8 4.8 6.2 8 8 8zm0 1.6c-2.1 0-6.4 1.1-6.4 3.2v1.6h12.8v-1.6c0-2.1-4.3-3.2-6.4-3.2z" fill="#FFFFFF"/>
+    <text x="18" y="14" fill="#FFFFFF" font-family="'Outfit', sans-serif" font-size="18" font-weight="800">1</text>
+  </g>
+
+  <!-- Medalla dorada -->
+  <g transform="translate(344, 12)">
+    <circle cx="16" cy="14" r="11" fill="url(#gold_grad)" stroke="#FFFFFF" stroke-width="1.5"/>
+    <polygon points="16,7 18.2,11.6 23.2,12.3 19.6,15.8 20.4,20.8 16,18.4 11.6,20.8 12.4,15.8 8.8,12.3 13.8,11.6" fill="#FFFFFF"/>
+    <path d="M11 23 L9 32 L16 28 L23 32 L21 23" fill="url(#gold_ribbon)"/>
+  </g>
+
+  <!-- Watermark "You STREAMING" -->
+  <text x="24" y="300" fill="#FFFFFF" fill-opacity="0.65" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="800" letter-spacing="1">
+    <tspan font-family="'Caveat', cursive" font-size="16">You</tspan> STREAMING
+  </text>
+
+  <!-- Logo DirecTV GO Centrado -->
+  <g transform="translate(90, 115)">
+    <path d="M30 20 C 65 20, 95 35, 95 60 C 95 85, 65 100, 30 100 Z" fill="#00B0FF"/>
+    <path d="M48 38 C 72 38, 78 48, 78 60 C 78 72, 72 82, 48 82 Z" fill="#071933"/>
+    <text x="110" y="80" fill="#FF7700" font-family="'Outfit', sans-serif" font-size="56" font-weight="900">GO</text>
+  </g>
+</svg>
