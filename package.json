@@ -1,0 +1,20 @@
+{
+  "name": "catalogo-suscripciones-digitales",
+  "version": "1.0.0",
+  "description": "Catálogo web profesional de plataformas y suscripciones de entretenimiento digital con integración a WhatsApp",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve . -l 3000",
+    "dev": "npx serve . -l 3000"
+  },
+  "keywords": [
+    "streaming",
+    "catalogo",
+    "suscripciones",
+    "whatsapp",
+    "landing-page",
+    "entretenimiento"
+  ],
+  "author": "StreamVault",
+  "license": "MIT"
+}

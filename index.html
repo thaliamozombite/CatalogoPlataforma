@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StreamVault | Catálogo de Suscripciones y Entretenimiento Digital</title>
+  
+  <!-- SEO & Metadatos Comerciales -->
+  <meta name="description" content="Explora nuestro catálogo de plataformas de streaming y entretenimiento digital. Compara planes y solicita información directa y disponibilidad por WhatsApp.">
+  <meta name="keywords" content="suscripciones digitales, streaming, peliculas, series, musica, netflix, disney, max, prime video, spotify, crunchyroll">
+  <meta name="author" content="StreamVault">
+  <meta name="theme-color" content="#07080c">
+
+  <!-- Open Graph / Redes Sociales -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="StreamVault | Catálogo de Suscripciones Digitales">
+  <meta property="og:description" content="Tu entretenimiento favorito en un solo lugar. Explora opciones y consulta disponibilidad por WhatsApp.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?auto=format&fit=crop&w=1200&q=80">
+
+  <!-- Favicon SVG -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%238b5cf6'><path d='M4 3h16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm6 4v10l8-5-8-5z'/></svg>">
+
+  <!-- Hojas de Estilo -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Franja Informativa de Demostración y Configuración -->
+  <aside class="demo-strip" aria-label="Aviso de demostración">
+    <div class="container demo-strip-content">
+      <div class="demo-strip-info">
+        <span class="badge badge-demo">Modo Demostración</span>
+        <span>Los precios y planes mostrados son referenciales. WhatsApp activo: <strong id="activeWaDisplay">+593 900 000 000</strong></span>
+      </div>
+      <button type="button" class="demo-strip-action-btn" id="openConfigBtn">
+        ⚙️ Configurar número de prueba
+      </button>
+    </div>
+  </aside>
+
+  <!-- BARRA DE NAVEGACIÓN -->
+  <header class="site-header" id="siteHeader">
+    <div class="container nav-container">
+      <!-- Logotipo y Nombre Comercial -->
+      <a href="#inicio" class="brand-link" aria-label="Inicio StreamVault">
+        <div class="brand-icon-box" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+        </div>
+        <div class="brand-text-group">
+          <span class="brand-name">Stream<span>Vault</span></span>
+          <span class="brand-subtitle">Suscripciones Digitales</span>
+        </div>
+      </a>
+
+      <!-- Menú de Enlaces Desktop -->
+      <nav aria-label="Navegación principal">
+        <ul class="nav-menu">
+          <li><a href="#inicio" class="nav-link active">Inicio</a></li>
+          <li><a href="#catalogo" class="nav-link">Catálogo</a></li>
+          <li><a href="#como-funciona" class="nav-link">Cómo funciona</a></li>
+          <li><a href="#beneficios" class="nav-link">Beneficios</a></li>
+          <li><a href="#faq" class="nav-link">Preguntas frecuentes</a></li>
+        </ul>
+      </nav>
+
+      <!-- Acciones de Navegación -->
+      <div class="nav-actions">
+        <a href="#" id="headerWaBtn" class="btn btn-whatsapp btn-sm" aria-label="Consultar por WhatsApp">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+          </svg>
+          <span>Consultar por WhatsApp</span>
+        </a>
+
+        <!-- Botón Menú Móvil -->
+        <button type="button" class="mobile-toggle-btn" id="mobileToggleBtn" aria-label="Abrir menú" aria-expanded="false">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MENÚ MÓVIL (DRAWER) -->
+  <div class="mobile-nav-drawer" id="mobileNavDrawer" aria-hidden="true">
+    <ul class="mobile-menu-list">
+      <li><a href="#inicio" class="mobile-nav-link">Inicio <span>→</span></a></li>
+      <li><a href="#catalogo" class="mobile-nav-link">Catálogo <span>→</span></a></li>
+      <li><a href="#como-funciona" class="mobile-nav-link">Cómo funciona <span>→</span></a></li>
+      <li><a href="#beneficios" class="mobile-nav-link">Beneficios <span>→</span></a></li>
+      <li><a href="#faq" class="mobile-nav-link">Preguntas frecuentes <span>→</span></a></li>
+    </ul>
+
+    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+      <a href="#" id="mobileWaBtn" class="btn btn-whatsapp btn-lg" style="width: 100%;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+        </svg>
+        <span>Chatear por WhatsApp</span>
+      </a>
+      <p style="text-align: center; font-size: 0.8rem; color: var(--text-muted);">
+        Atención personalizada e inmediata
+      </p>
+    </div>
+  </div>
+
+  <main>
+    <!-- SECCIÓN HERO -->
+    <section class="hero-section" id="inicio">
+      <div class="container hero-grid">
+        <!-- Columna de Texto -->
+        <div class="hero-content">
+          <div class="hero-tag">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+            <span>Catálogo 2026 • Entretenimiento en Alta Definición</span>
+          </div>
+
+          <h1 class="hero-title">
+            Tu entretenimiento favorito, <span class="highlight">en un solo lugar</span>.
+          </h1>
+
+          <p class="hero-subtitle">
+            Explora nuestro catálogo de plataformas y encuentra el plan ideal para ti. Consulta disponibilidad, condiciones y activa tu servicio cómodamente por WhatsApp.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#catalogo" class="btn btn-primary btn-lg">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+              <span>Explorar catálogo</span>
+            </a>
+
+            <a href="#" id="heroWaBtn" class="btn btn-secondary btn-lg">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+              </svg>
+              <span>Consultar disponibilidad</span>
+            </a>
+          </div>
+
+          <!-- Puntos de Confianza -->
+          <div class="hero-trust-row">
+            <div class="hero-trust-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>Atención 1 a 1</span>
+            </div>
+            <div class="hero-trust-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>Activación asistida</span>
+            </div>
+            <div class="hero-trust-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>Respaldo garantizado</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columna Visual Interactiva -->
+        <div class="hero-visual">
+          <div class="hero-visual-card">
+            <div class="hero-card-header">
+              <span class="hero-card-title">Servicios Populares</span>
+              <span class="badge badge-accent">En Directo</span>
+            </div>
+
+            <div class="hero-card-platforms-strip">
+              <div class="hero-mini-platform">
+                <span style="color: #e50914; font-weight: 800; font-size: 1.1rem;">NETFLIX</span>
+                <span>Ultra HD 4K</span>
+              </div>
+              <div class="hero-mini-platform">
+                <span style="color: #3b82f6; font-weight: 800; font-size: 1.1rem;">DISNEY+</span>
+                <span>Familiar</span>
+              </div>
+              <div class="hero-mini-platform">
+                <span style="color: #a855f7; font-weight: 800; font-size: 1.1rem;">MAX</span>
+                <span>HBO Series</span>
+              </div>
+              <div class="hero-mini-platform">
+                <span style="color: #06b6d4; font-weight: 800; font-size: 1.1rem;">PRIME</span>
+                <span>Video & Cine</span>
+              </div>
+              <div class="hero-mini-platform">
+                <span style="color: #22c55e; font-weight: 800; font-size: 1.1rem;">SPOTIFY</span>
+                <span>Sin Pausas</span>
+              </div>
+              <div class="hero-mini-platform">
+                <span style="color: #f97316; font-weight: 800; font-size: 1.1rem;">CRUNCHY</span>
+                <span>Simulcast</span>
+              </div>
+            </div>
+
+            <div class="hero-card-whatsapp-box">
+              <div class="hero-wa-pulse-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                </svg>
+              </div>
+              <div class="hero-wa-text">
+                <strong>¿Deseas consultar un plan?</strong><br>
+                Escríbenos y un asesor te responderá con la disponibilidad al instante.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN CATÁLOGO DE PLATAFORMAS -->
+    <section class="catalog-section" id="catalogo">
+      <div class="container">
+        <!-- Encabezado de la Sección -->
+        <div class="section-header">
+          <span class="section-tag">Explora Nuestro Catálogo</span>
+          <h2 class="section-title">Plataformas Disponibles</h2>
+          <p class="section-subtitle">
+            Selecciona cualquiera de las opciones para revisar sus planes detallados, duración y condiciones de servicio.
+          </p>
+        </div>
+
+        <!-- Barra de Herramientas (Buscador y Filtros por Categoría) -->
+        <div class="catalog-toolbar">
+          <div class="toolbar-search-row">
+            <div class="search-box">
+              <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input 
+                type="search" 
+                id="searchInput" 
+                class="search-input" 
+                placeholder="Buscar por nombre, series o categoría (ej. Netflix, Anime, Música)..." 
+                autocomplete="off"
+              >
+              <button type="button" id="searchClearBtn" class="search-clear-btn" aria-label="Limpiar búsqueda">✕</button>
+            </div>
+          </div>
+
+          <!-- Filtros de Categorías -->
+          <div class="category-filter-list" id="categoryPillsContainer" role="tablist" aria-label="Filtrar por categoría">
+            <!-- Inyectado dinámicamente por JavaScript -->
+          </div>
+
+          <!-- Información de Resultados -->
+          <div class="toolbar-results-info">
+            <span id="resultsCounter">Cargando catálogo...</span>
+            <span style="font-size: 0.78rem;">* Precios referenciales sujetos a confirmación</span>
+          </div>
+        </div>
+
+        <!-- Cuadrícula de Tarjetas de Plataformas -->
+        <div class="platforms-grid" id="platformsGrid">
+          <!-- Inyectado dinámicamente por JavaScript -->
+        </div>
+
+        <!-- Estado Vacío cuando no hay coincidencias -->
+        <div class="catalog-empty-state" id="catalogEmptyState">
+          <svg class="empty-state-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            <line x1="8" y1="11" x2="14" y2="11"></line>
+          </svg>
+          <h3 class="empty-state-title">No encontramos plataformas coincidentes</h3>
+          <p class="empty-state-text">Intenta con otro término de búsqueda o restablece los filtros para ver todas las opciones disponibles.</p>
+          <button type="button" class="btn btn-secondary" id="emptyResetBtn">
+            Restablecer filtros
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN CÓMO FUNCIONA (3 PASOS) -->
+    <section class="how-it-works-section" id="como-funciona">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Proceso Sencillo</span>
+          <h2 class="section-title">¿Cómo funciona?</h2>
+          <p class="section-subtitle">
+            Tres pasos simples para disfrutar de tu contenido digital sin complicaciones.
+          </p>
+        </div>
+
+        <div class="steps-grid" id="howItWorksGrid">
+          <!-- Inyectado dinámicamente por JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN BENEFICIOS GARANTIZADOS -->
+    <section class="benefits-section" id="beneficios">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Transparencia y Confianza</span>
+          <h2 class="section-title">Nuestros Compromisos</h2>
+          <p class="section-subtitle">
+            Garantizamos lo que verdaderamente podemos ofrecerte con honestidad y respaldo.
+          </p>
+        </div>
+
+        <div class="benefits-grid" id="benefitsGrid">
+          <!-- Inyectado dinámicamente por JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN PREGUNTAS FRECUENTES (FAQ ACCORDION) -->
+    <section class="faq-section" id="faq">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Dudas y Respuestas</span>
+          <h2 class="section-title">Preguntas Frecuentes</h2>
+          <p class="section-subtitle">
+            Resolvemos las consultas más habituales sobre nuestro catálogo y proceso de atención.
+          </p>
+        </div>
+
+        <div class="faq-accordion-container" id="faqAccordion">
+          <!-- Inyectado dinámicamente por JavaScript -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- PIE DE PÁGINA (FOOTER) -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top-grid">
+        <!-- Columna Marca -->
+        <div class="footer-brand-col">
+          <div class="brand-link">
+            <div class="brand-icon-box" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+            </div>
+            <span class="brand-name">Stream<span>Vault</span></span>
+          </div>
+          <p class="footer-desc">
+            Catálogo y portal de consulta de planes para plataformas de entretenimiento digital y streaming.
+          </p>
+        </div>
+
+        <!-- Columna Secciones Rápidas -->
+        <div class="footer-links-col">
+          <h4 class="footer-col-title">Secciones</h4>
+          <ul class="footer-nav-list">
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#catalogo">Catálogo de Plataformas</a></li>
+            <li><a href="#como-funciona">Cómo funciona</a></li>
+            <li><a href="#beneficios">Beneficios</a></li>
+            <li><a href="#faq">Preguntas frecuentes</a></li>
+          </ul>
+        </div>
+
+        <!-- Columna Legal -->
+        <div class="footer-links-col">
+          <h4 class="footer-col-title">Legal</h4>
+          <ul class="footer-nav-list">
+            <li><a href="#" id="openTermsBtn">Términos y Condiciones</a></li>
+            <li><a href="#" id="openPrivacyBtn">Política de Privacidad</a></li>
+          </ul>
+        </div>
+
+        <!-- Columna Contacto -->
+        <div class="footer-contact-col">
+          <h4 class="footer-col-title">Atención Directa</h4>
+          <p class="footer-contact-caption">
+            ¿Tienes alguna consulta específica o deseas verificar disponibilidad en vivo?
+          </p>
+          <a href="#" id="footerWaBtn" class="btn btn-whatsapp" style="width: fit-content;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+            </svg>
+            <span>Consultar por WhatsApp</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Aviso Legal Obligatorio de Marcas y Plataformas -->
+      <div class="footer-legal-notice-box">
+        <strong>Aviso de marcas y titularidad:</strong> Las marcas, logotipos, nombres comerciales y producciones audiovisuales de las plataformas mencionadas (como Netflix, Disney+, Max, Amazon Prime Video, Spotify, Crunchyroll, Apple TV+, YouTube Premium, Paramount+, entre otras) pertenecen en exclusiva a sus respectivos titulares y propietarios. Este sitio web opera únicamente como un catálogo comercial e informativo independiente para la intermediación de consultas y no debe presentarse como representante oficial, afiliado exclusivo ni agente autorizado sin previa autorización formal.
+      </div>
+
+      <!-- Barra Inferior de Copyright -->
+      <div class="footer-bottom-bar">
+        <div>
+          © <span id="currentYear">2026</span> StreamVault. Todos los derechos reservados.
+        </div>
+        <div class="footer-bottom-links">
+          <span>Sitio optimizado para dispositivos móviles y escritorio</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODAL: DETALLES DE PLANES DE LA PLATAFORMA -->
+  <div class="modal-backdrop" id="plansModal" role="dialog" aria-modal="true" aria-labelledby="modalPlatformName">
+    <div class="modal-sheet" id="modalSheet">
+      <!-- Encabezado del Modal -->
+      <div class="modal-header">
+        <div class="modal-platform-info">
+          <div class="modal-platform-logo" id="modalPlatformLogo" aria-hidden="true"></div>
+          <div class="modal-platform-text">
+            <h3 id="modalPlatformName">Plataforma</h3>
+            <div style="display: flex; gap: 0.5rem; margin-top: 0.25rem;">
+              <span class="badge badge-accent" id="modalCategoryBadge">Categoría</span>
+              <span class="badge badge-available" id="modalAvailabilityBadge">Disponible</span>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="modal-close-btn" id="modalCloseBtn" aria-label="Cerrar modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="18" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Cuerpo del Modal -->
+      <div class="modal-body">
+        <div class="modal-description-box" id="modalPlatformDesc">
+          <!-- Descripción detallada inyectada -->
+        </div>
+
+        <div class="modal-plans-section-title">
+          <span>Planes Disponibles</span>
+          <span class="badge badge-demo">Demostración</span>
+        </div>
+
+        <!-- Lista de Tarjetas de Planes -->
+        <div class="modal-plans-grid" id="modalPlansList">
+          <!-- Inyectado dinámicamente por JavaScript -->
+        </div>
+      </div>
+
+      <!-- Pie del Modal -->
+      <div class="modal-footer">
+        <span>Al pulsar "Consultar este plan" se abrirá un chat de WhatsApp con el mensaje estructurado.</span>
+        <span class="badge badge-accent">Respuesta rápida</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CONFIGURADOR SANDBOX DE WHATSAPP (ADMIN / DEMO) -->
+  <div class="modal-backdrop" id="configModal" role="dialog" aria-modal="true" aria-labelledby="configModalTitle">
+    <div class="modal-sheet config-modal-sheet">
+      <div class="modal-header">
+        <h3 id="configModalTitle" style="color: #ffffff; font-size: 1.2rem;">Configurar Número de WhatsApp</h3>
+        <button type="button" class="modal-close-btn" id="configCloseBtn" aria-label="Cerrar configurador">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="18" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-body" style="gap: 1.2rem;">
+        <p style="font-size: 0.9rem; color: var(--text-secondary);">
+          Ingresa tu número de WhatsApp para probar los enlaces directamente desde tu navegador.
+          El cambio se guardará en tu navegador y actualizará automáticamente todos los botones de la página.
+        </p>
+
+        <div class="config-input-group">
+          <label for="configInputWa">Número de WhatsApp (con código de país, sin '+' ni espacios):</label>
+          <input type="text" id="configInputWa" placeholder="Ej: 5215512345678, 593987654321, 573001234567" maxlength="15">
+          <span class="config-helper-text">
+            Ejemplo México: <code>5215512345678</code> | Colombia: <code>573001234567</code> | Ecuador: <code>593987654321</code> | Argentina: <code>5491112345678</code>
+          </span>
+        </div>
+
+        <div style="display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 0.5rem;">
+          <button type="button" class="btn btn-secondary btn-sm" id="configResetBtn">Restablecer por defecto</button>
+          <button type="button" class="btn btn-primary btn-sm" id="configSaveBtn">Guardar número</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: LEGAL (TÉRMINOS Y CONDICIONES / POLÍTICA DE PRIVACIDAD) -->
+  <div class="modal-backdrop" id="legalModal" role="dialog" aria-modal="true" aria-labelledby="legalModalTitle">
+    <div class="modal-sheet" style="max-width: 620px;">
+      <div class="modal-header">
+        <h3 id="legalModalTitle" style="color: #ffffff; font-size: 1.25rem;">Información Legal</h3>
+        <button type="button" class="modal-close-btn" id="legalModalCloseBtn" aria-label="Cerrar información legal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="18" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body" id="legalModalBody" style="font-size: 0.92rem; line-height: 1.6; gap: 1rem;">
+        <!-- Inyectado dinámicamente -->
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENEDOR DE TOAST NOTIFICATIONS -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- Scripts Principales (ES Modules) -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
