@@ -12,18 +12,14 @@ export const CONFIG = {
     shortName: "You stream",
     tagline: "Planes & Suscripciones Digitales",
     badge: "Tienda Oficial",
-    whatsappDisplay: "+51 900 000 000 (Pendiente de configurar)",
+    whatsappDisplay: "+51 948 451 598",
   },
 
   /**
-   * NÚMERO DE WHATSAPP COMERCIAL (¡IMPORTANTE!)
-   * - Formato internacional sin signo '+' ni espacios ni guiones.
-   * - Ejemplo Perú: 51987654321
-   * - Ejemplo México: 5215512345678
-   * - Ejemplo Colombia: 573001234567
-   * - Ejemplo Ecuador: 593987654321
+   * NÚMERO DE WHATSAPP COMERCIAL
+   * Código de país 51 (Perú) + 948451598
    */
-  whatsappNumber: "51900000000",
+  whatsappNumber: "51948451598",
 
   // Moneda por defecto (Soles S/ según la referencia)
   currency: {
