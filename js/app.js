@@ -1,11 +1,19 @@
 /**
  * YOU STREAM - APLICACIÓN PRINCIPAL
  * ---------------------------------
- * Renderiza el catálogo de tarjetas usando los archivos de imagen
- * ubicados en assets/cards/*.svg para cada plataforma.
+ * Soporte multi-cuenta Facebook y Sedes con números de WhatsApp independientes.
+ * Detección automática por URL (?sede=fb1) y generador de enlaces para publicaciones.
  */
 
-import { CONFIG, getActiveWhatsAppNumber, buildWhatsAppUrl } from './config.js';
+import { 
+  CONFIG, 
+  getAllSedes, 
+  getActiveSede, 
+  setActiveSedeId, 
+  buildWhatsAppUrl,
+  getFacebookShareUrl
+} from './config.js';
+
 import { 
   CATEGORIES, 
   PLATFORMS_DATA, 
@@ -33,6 +41,18 @@ const dom = {
   catalogEmptyState: document.getElementById('catalogEmptyState'),
   emptyResetBtn: document.getElementById('emptyResetBtn'),
   resultsCounter: document.getElementById('resultsCounter'),
+
+  // Elementos de Sede / Cuentas de Facebook
+  sedeSelect: document.getElementById('sedeSelect'),
+  activeWaDisplay: document.getElementById('activeWaDisplay'),
+  navSedeBtn: document.getElementById('navSedeBtn'),
+  navSedeName: document.getElementById('navSedeName'),
+  openSedesModalBtn: document.getElementById('openSedesModalBtn'),
+  sedesModal: document.getElementById('sedesModal'),
+  sedesModalCloseBtn: document.getElementById('sedesModalCloseBtn'),
+  sedesModalGrid: document.getElementById('sedesModalGrid'),
+  
+  // Modal de Planes
   plansModal: document.getElementById('plansModal'),
   modalCloseBtn: document.getElementById('modalCloseBtn'),
   modalPlatformLogo: document.getElementById('modalPlatformLogo'),
@@ -41,18 +61,18 @@ const dom = {
   modalAvailabilityBadge: document.getElementById('modalAvailabilityBadge'),
   modalPlatformDesc: document.getElementById('modalPlatformDesc'),
   modalPlansList: document.getElementById('modalPlansList'),
+
+  // Secciones
   howItWorksGrid: document.getElementById('howItWorksGrid'),
   benefitsGrid: document.getElementById('benefitsGrid'),
   faqAccordion: document.getElementById('faqAccordion'),
   toastContainer: document.getElementById('toastContainer'),
   
-  // Elementos configurables
-  brandNameElements: document.querySelectorAll('.dynamic-brand-name'),
-  activeWaDisplay: document.getElementById('activeWaDisplay'),
+  // Administrador de números (Config Modal)
   openConfigBtn: document.getElementById('openConfigBtn'),
   configModal: document.getElementById('configModal'),
   configCloseBtn: document.getElementById('configCloseBtn'),
-  configInputWa: document.getElementById('configInputWa'),
+  sedesConfigInputsList: document.getElementById('sedesConfigInputsList'),
   configSaveBtn: document.getElementById('configSaveBtn'),
   configResetBtn: document.getElementById('configResetBtn'),
 
@@ -76,6 +96,8 @@ const dom = {
  */
 document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
+  initSedesUI();
+  updateActiveSedeDisplay();
   initFixedWhatsAppLinks();
   renderCategoryPills();
   renderCatalog();
@@ -86,27 +108,168 @@ document.addEventListener('DOMContentLoaded', () => {
   initModals();
   initConfigSandbox();
   initLegalModals();
-  updateBrandTexts();
+
+  // Comprobar si llegó con parámetro ?sede= de Facebook
+  const urlParams = new URLSearchParams(window.location.search);
+  const fromParam = urlParams.get('sede') || urlParams.get('fb') || urlParams.get('ref');
+  if (fromParam) {
+    const active = getActiveSede();
+    showToast(`📱 Conectado con ${active.name} (${active.displayPhone})`, 'success');
+  }
 });
 
-function updateBrandTexts() {
-  dom.brandNameElements.forEach(el => {
-    el.textContent = CONFIG.brand.name;
-  });
+/**
+ * Inicializa el selector de sedes / cuentas de Facebook y modales
+ */
+function initSedesUI() {
+  const sedes = getAllSedes();
+  const activeSede = getActiveSede();
 
-  const activeNumber = getActiveWhatsAppNumber();
-  if (dom.activeWaDisplay) {
-    if (activeNumber === CONFIG.whatsappNumber) {
-      dom.activeWaDisplay.textContent = CONFIG.brand.whatsappDisplay;
-    } else {
-      dom.activeWaDisplay.textContent = `+${activeNumber} (Activo para pruebas)`;
-    }
+  // 1. Selector desplegable superior
+  if (dom.sedeSelect) {
+    dom.sedeSelect.innerHTML = '';
+    sedes.forEach(s => {
+      const opt = document.createElement('option');
+      opt.value = s.id;
+      opt.textContent = `${s.name} (${s.displayPhone})`;
+      if (s.id === activeSede.id) opt.selected = true;
+      dom.sedeSelect.appendChild(opt);
+    });
+
+    dom.sedeSelect.addEventListener('change', (e) => {
+      setActiveSedeId(e.target.value);
+      handleSedeChange();
+    });
+  }
+
+  // 2. Botón del Navbar para ver/cambiar cuentas
+  if (dom.navSedeBtn) {
+    dom.navSedeBtn.addEventListener('click', openSedesModal);
+  }
+  if (dom.openSedesModalBtn) {
+    dom.openSedesModalBtn.addEventListener('click', openSedesModal);
+  }
+  if (dom.sedesModalCloseBtn) {
+    dom.sedesModalCloseBtn.addEventListener('click', closeSedesModal);
+  }
+  if (dom.sedesModal) {
+    dom.sedesModal.addEventListener('click', (e) => {
+      if (e.target === dom.sedesModal) closeSedesModal();
+    });
   }
 }
 
+/**
+ * Actualiza la vista al cambiar de cuenta / sede
+ */
+function handleSedeChange() {
+  const activeSede = getActiveSede();
+  updateActiveSedeDisplay();
+  initFixedWhatsAppLinks();
+  renderCatalog();
+  renderSedesModalCards();
+  showToast(`Canal activo: ${activeSede.name} (${activeSede.displayPhone})`, 'success');
+}
+
+function updateActiveSedeDisplay() {
+  const activeSede = getActiveSede();
+  if (dom.activeWaDisplay) {
+    dom.activeWaDisplay.textContent = `${activeSede.displayPhone} (${activeSede.name})`;
+  }
+  if (dom.navSedeName) {
+    dom.navSedeName.textContent = activeSede.name;
+  }
+  if (dom.sedeSelect) {
+    dom.sedeSelect.value = activeSede.id;
+  }
+}
+
+function openSedesModal() {
+  renderSedesModalCards();
+  dom.sedesModal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSedesModal() {
+  dom.sedesModal.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+/**
+ * Renderiza las tarjetas de cada cuenta / sede con su enlace de Facebook
+ */
+function renderSedesModalCards() {
+  if (!dom.sedesModalGrid) return;
+  dom.sedesModalGrid.innerHTML = '';
+
+  const sedes = getAllSedes();
+  const activeSede = getActiveSede();
+
+  sedes.forEach(s => {
+    const isActive = s.id === activeSede.id;
+    const directWaUrl = buildWhatsAppUrl(CONFIG.messages.generalInquiry(s.name), s);
+    const fbShareUrl = getFacebookShareUrl(s.id);
+
+    const card = document.createElement('div');
+    card.className = `sede-card ${isActive ? 'active' : ''}`;
+
+    card.innerHTML = `
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+          <h4 style="font-size: 1.15rem; color: #ffffff;">${s.name}</h4>
+          ${isActive ? `<span style="background: rgba(0,229,255,0.18); color: #00e5ff; font-size: 0.72rem; padding: 2px 8px; border-radius: 99px; font-weight: 700;">Activa</span>` : ''}
+        </div>
+        <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 4px;">👤 Canal / Perfil: <strong>${s.facebookAccount || s.city}</strong></p>
+        <p style="font-size: 0.95rem; font-weight: 800; color: #00e5ff; margin-bottom: 8px;">📱 WhatsApp: ${s.displayPhone}</p>
+        
+        <!-- Generador de Enlace para publicación de Facebook -->
+        <div style="background: rgba(0,0,0,0.4); border: 1px dashed rgba(255,255,255,0.15); border-radius: 8px; padding: 8px 10px; margin-top: 8px;">
+          <span style="font-size: 0.75rem; color: #94a3b8; display: block; margin-bottom: 4px;">🔗 Enlace para tus publicaciones de Facebook:</span>
+          <div style="display: flex; gap: 6px; align-items: center;">
+            <input type="text" readonly value="${fbShareUrl}" style="background: #11141e; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; padding: 4px 6px; font-size: 0.75rem; color: #67e8f9; width: 100%; font-family: monospace;" />
+            <button type="button" class="btn btn-secondary copy-link-btn" style="padding: 4px 8px; font-size: 0.75rem; white-space: nowrap;" title="Copiar enlace para Facebook">
+              Copiar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 8px; margin-top: 10px;">
+        <button type="button" class="btn btn-secondary select-sede-btn" style="padding: 6px 12px; font-size: 0.82rem; flex: 1;">
+          ${isActive ? '✓ Cuenta Actual' : 'Elegir esta Cuenta'}
+        </button>
+        <a href="${directWaUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp" style="padding: 6px 12px; font-size: 0.82rem;" title="Chatear con ${s.name}">
+          WhatsApp
+        </a>
+      </div>
+    `;
+
+    // Botón seleccionar sede
+    const selectBtn = card.querySelector('.select-sede-btn');
+    selectBtn.addEventListener('click', () => {
+      setActiveSedeId(s.id);
+      handleSedeChange();
+      closeSedesModal();
+    });
+
+    // Botón copiar enlace de Facebook
+    const copyBtn = card.querySelector('.copy-link-btn');
+    copyBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(fbShareUrl).then(() => {
+        showToast(`¡Enlace copiado! Pégalo en tu Facebook (${s.name})`, 'success');
+      }).catch(() => {
+        showToast('Enlace listo: ' + fbShareUrl, 'info');
+      });
+    });
+
+    dom.sedesModalGrid.appendChild(card);
+  });
+}
+
 function initFixedWhatsAppLinks() {
-  const generalMsg = CONFIG.messages.generalInquiry();
-  const url = buildWhatsAppUrl(generalMsg);
+  const activeSede = getActiveSede();
+  const generalMsg = CONFIG.messages.generalInquiry(activeSede.name);
+  const url = buildWhatsAppUrl(generalMsg, activeSede);
 
   [dom.headerWaBtn, dom.heroWaBtn, dom.footerWaBtn, dom.mobileWaBtn].forEach(btn => {
     if (btn) {
@@ -204,10 +367,12 @@ function initSearch() {
 }
 
 /**
- * Renderiza el catálogo de tarjetas Gift Cards con imágenes reales
+ * Renderiza el catálogo de tarjetas Gift Cards con imágenes y enlaces a la sede/cuenta activa
  */
 function renderCatalog() {
   if (!dom.platformsGrid) return;
+
+  const activeSede = getActiveSede();
 
   const filtered = PLATFORMS_DATA.filter(platform => {
     const matchesCategory = state.currentCategory === 'all' || platform.category === state.currentCategory;
@@ -222,7 +387,7 @@ function renderCatalog() {
   });
 
   if (dom.resultsCounter) {
-    dom.resultsCounter.innerHTML = `Mostrando <strong>${filtered.length}</strong> de <strong>${PLATFORMS_DATA.length}</strong> tarjetas disponibles`;
+    dom.resultsCounter.innerHTML = `Mostrando <strong>${filtered.length}</strong> de <strong>${PLATFORMS_DATA.length}</strong> tarjetas • 📱 ${activeSede.name}`;
   }
 
   if (filtered.length === 0) {
@@ -239,19 +404,19 @@ function renderCatalog() {
   filtered.forEach(platform => {
     const isAvailable = platform.availability === 'available';
     
-    // Mensaje para botón "Comprar"
-    const buyMessage = CONFIG.messages.buyPlan(platform.name, platform.title, platform.offerPrice);
-    const buyUrl = buildWhatsAppUrl(buyMessage);
+    // Mensaje para botón "Comprar" con nombre de la cuenta activa
+    const buyMessage = CONFIG.messages.buyPlan(platform.name, platform.title, platform.offerPrice, activeSede.name);
+    const buyUrl = buildWhatsAppUrl(buyMessage, activeSede);
 
-    // Mensaje para botón "Renovar"
-    const renewMessage = CONFIG.messages.renewPlan(platform.name, platform.title, platform.offerPrice);
-    const renewUrl = buildWhatsAppUrl(renewMessage);
+    // Mensaje para botón "Renovar" con nombre de la cuenta activa
+    const renewMessage = CONFIG.messages.renewPlan(platform.name, platform.title, platform.offerPrice, activeSede.name);
+    const renewUrl = buildWhatsAppUrl(renewMessage, activeSede);
 
     const card = document.createElement('article');
     card.className = `gift-card-item ${!isAvailable ? 'unavailable' : ''}`;
 
     card.innerHTML = `
-      <!-- Imagen de la tarjeta con ranura de colgar, perfiles y medalla -->
+      <!-- Imagen de la tarjeta -->
       <div class="gift-card-face-wrapper" style="cursor: pointer;" title="Haz clic para ver detalles y condiciones">
         <img src="${platform.cardImage}" alt="${platform.title}" class="gift-card-img" loading="lazy" />
       </div>
@@ -266,17 +431,16 @@ function renderCatalog() {
         </div>
 
         <div class="gift-card-actions-row">
-          <a href="${buyUrl}" target="_blank" rel="noopener noreferrer" class="btn-card-buy" title="Comprar este plan por WhatsApp">
+          <a href="${buyUrl}" target="_blank" rel="noopener noreferrer" class="btn-card-buy" title="Comprar este plan por WhatsApp (${activeSede.name})">
             Comprar
           </a>
-          <a href="${renewUrl}" target="_blank" rel="noopener noreferrer" class="btn-card-renew" title="Renovar suscripción por WhatsApp">
+          <a href="${renewUrl}" target="_blank" rel="noopener noreferrer" class="btn-card-renew" title="Renovar suscripción por WhatsApp (${activeSede.name})">
             Renovar
           </a>
         </div>
       </div>
     `;
 
-    // Abrir modal de detalles al pulsar en la imagen o título
     const faceEl = card.querySelector('.gift-card-face-wrapper');
     const titleEl = card.querySelector('.gift-card-title');
     [faceEl, titleEl].forEach(el => {
@@ -289,6 +453,7 @@ function renderCatalog() {
 
 function openPlansModal(platform) {
   state.activePlatform = platform;
+  const activeSede = getActiveSede();
 
   dom.modalPlatformLogo.innerHTML = `<img src="${platform.cardImage}" alt="${platform.name}" style="width: 54px; height: 42px; object-fit: cover; border-radius: 6px;" />`;
   dom.modalPlatformName.textContent = platform.name;
@@ -304,10 +469,10 @@ function openPlansModal(platform) {
   dom.modalPlansList.innerHTML = '';
 
   platform.plans.forEach(plan => {
-    const buyMsg = CONFIG.messages.buyPlan(platform.name, plan.name, plan.price);
-    const renewMsg = CONFIG.messages.renewPlan(platform.name, plan.name, plan.price);
-    const buyUrl = buildWhatsAppUrl(buyMsg);
-    const renewUrl = buildWhatsAppUrl(renewMsg);
+    const buyMsg = CONFIG.messages.buyPlan(platform.name, plan.name, plan.price, activeSede.name);
+    const renewMsg = CONFIG.messages.renewPlan(platform.name, plan.name, plan.price, activeSede.name);
+    const buyUrl = buildWhatsAppUrl(buyMsg, activeSede);
+    const renewUrl = buildWhatsAppUrl(renewMsg, activeSede);
 
     const planCard = document.createElement('div');
     planCard.className = 'modal-plan-card highlight';
@@ -323,6 +488,10 @@ function openPlansModal(platform) {
       <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
         <h4 style="font-size: 1.15rem; color: #ffffff;">${plan.name}</h4>
         <span style="font-size: 1.35rem; font-weight: 800; color: #00e5ff;">${plan.currency} ${plan.price.toFixed(2)}</span>
+      </div>
+
+      <div style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 8px;">
+        📱 Cuenta / Asesor asignado: <strong style="color: #ffffff;">${activeSede.name}</strong> (${activeSede.displayPhone})
       </div>
 
       <ul style="list-style: none; margin-bottom: 14px;">
@@ -366,6 +535,7 @@ function initModals() {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       if (dom.plansModal.classList.contains('active')) closePlansModal();
+      if (dom.sedesModal && dom.sedesModal.classList.contains('active')) closeSedesModal();
       if (dom.configModal && dom.configModal.classList.contains('active')) closeConfigSandbox();
       if (dom.legalModal && dom.legalModal.classList.contains('active')) closeLegalModal();
     }
@@ -446,11 +616,14 @@ function renderFaqs() {
   });
 }
 
+/**
+ * Administrador de números de WhatsApp por Cuenta de Facebook
+ */
 function initConfigSandbox() {
   if (!dom.openConfigBtn || !dom.configModal) return;
 
   dom.openConfigBtn.addEventListener('click', () => {
-    dom.configInputWa.value = getActiveWhatsAppNumber();
+    renderConfigSedesInputs();
     dom.configModal.classList.add('active');
     document.body.style.overflow = 'hidden';
   });
@@ -463,30 +636,62 @@ function initConfigSandbox() {
 
   if (dom.configSaveBtn) {
     dom.configSaveBtn.addEventListener('click', () => {
-      const cleaned = dom.configInputWa.value.replace(/[^0-9]/g, '');
-      if (cleaned.length < 8 || cleaned.length > 15) {
-        showToast('Ingresa un número internacional válido (entre 8 y 15 dígitos)', 'error');
-        return;
-      }
-      localStorage.setItem('youstream_custom_wa', cleaned);
-      updateBrandTexts();
-      initFixedWhatsAppLinks();
-      renderCatalog();
+      const sedes = getAllSedes();
+      const updatedSedes = sedes.map(s => {
+        const input = document.getElementById(`config-input-sede-${s.id}`);
+        const nameInput = document.getElementById(`config-input-name-${s.id}`);
+        const val = input ? input.value.replace(/[^0-9]/g, '') : s.whatsappNumber;
+        const nameVal = nameInput ? nameInput.value.trim() : s.name;
+        return {
+          ...s,
+          name: nameVal || s.name,
+          whatsappNumber: val,
+          displayPhone: `+${val}`
+        };
+      });
+
+      localStorage.setItem('youstream_custom_sedes', JSON.stringify(updatedSedes));
+      initSedesUI();
+      handleSedeChange();
       closeConfigSandbox();
-      showToast(`¡Número actualizado a +${cleaned}!`, 'success');
+      showToast('¡Números de las cuentas actualizados con éxito!', 'success');
     });
   }
 
   if (dom.configResetBtn) {
     dom.configResetBtn.addEventListener('click', () => {
-      localStorage.removeItem('youstream_custom_wa');
-      updateBrandTexts();
-      initFixedWhatsAppLinks();
-      renderCatalog();
+      localStorage.removeItem('youstream_custom_sedes');
+      localStorage.removeItem('youstream_active_sede_id');
+      initSedesUI();
+      handleSedeChange();
       closeConfigSandbox();
-      showToast('Número restablecido a predeterminado', 'info');
+      showToast('Cuentas restablecidas a los valores predeterminados', 'info');
     });
   }
+}
+
+function renderConfigSedesInputs() {
+  if (!dom.sedesConfigInputsList) return;
+  dom.sedesConfigInputsList.innerHTML = '';
+
+  const sedes = getAllSedes();
+  sedes.forEach(s => {
+    const div = document.createElement('div');
+    div.style.cssText = 'background: rgba(255,255,255,0.03); padding: 10px 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.08);';
+
+    div.innerHTML = `
+      <div style="margin-bottom: 6px;">
+        <label style="font-size: 0.8rem; color: #94a3b8; display: block; margin-bottom: 2px;">Nombre de la Cuenta / Fanpage de Facebook:</label>
+        <input type="text" id="config-input-name-${s.id}" value="${s.name}" style="width: 100%; padding: 6px 10px; background: #131722; border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; color: #ffffff; font-size: 0.9rem;" />
+      </div>
+      <div>
+        <label style="font-size: 0.8rem; color: #94a3b8; display: block; margin-bottom: 2px;">Número de Celular WhatsApp (código 51 + 9 dígitos):</label>
+        <input type="text" id="config-input-sede-${s.id}" value="${s.whatsappNumber}" style="width: 100%; padding: 6px 10px; background: #131722; border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; color: #ffffff; font-size: 0.9rem;" maxlength="15" />
+      </div>
+    `;
+
+    dom.sedesConfigInputsList.appendChild(div);
+  });
 }
 
 function closeConfigSandbox() {
@@ -502,7 +707,7 @@ function initLegalModals() {
     dom.legalModalTitle.textContent = "Términos y Condiciones";
     dom.legalModalBody.innerHTML = `
       <p><strong>1. Objeto del sitio:</strong> You stream es un portal de exhibición y consulta de planes de entretenimiento digital. No efectúa cobros automáticos en línea en este sitio web.</p>
-      <p><strong>2. Solicitud y compra:</strong> La coordinación de pago, verificación de disponibilidad y entrega de credenciales se realiza directamente mediante WhatsApp.</p>
+      <p><strong>2. Solicitud y compra:</strong> La coordinación de pago, verificación de disponibilidad y entrega de credenciales se realiza directamente mediante WhatsApp con el asesor correspondiente.</p>
       <p><strong>3. Titularidad:</strong> You stream no es representante oficial ni exclusivo de las marcas mostradas. Su uso es estrictamente informativo e identificativo.</p>
     `;
     dom.legalModal.classList.add('active');
