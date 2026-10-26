@@ -85,6 +85,8 @@ html {
   scroll-behavior: smooth;
   font-size: 16px;
   color-scheme: dark;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
@@ -701,15 +703,14 @@ button {
 @media (max-width: 768px) {
   .gift-cards-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.85rem;
+    gap: 0.65rem;
   }
 }
 
 @media (max-width: 480px) {
   .gift-cards-grid {
-    grid-template-columns: 1fr;
-    max-width: 320px;
-    margin: 0 auto;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
   }
 }
 
@@ -1214,23 +1215,470 @@ button {
   font-size: 1rem;
 }
 
+/* ==========================================================================
+   FLOATING WHATSAPP BUTTON (MÓVIL & ESCRITORIO)
+   ========================================================================== */
+.floating-wa-btn {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.45);
+  z-index: 990;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+  text-decoration: none;
+}
+
+.floating-wa-btn:hover {
+  transform: scale(1.08) translateY(-3px);
+  box-shadow: 0 12px 30px rgba(37, 211, 102, 0.65);
+}
+
+.floating-wa-pulse {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid #25d366;
+  opacity: 0.8;
+  animation: waPulse 2s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+  pointer-events: none;
+}
+
+@keyframes waPulse {
+  0% { transform: scale(0.95); opacity: 0.9; }
+  50% { transform: scale(1.22); opacity: 0; }
+  100% { transform: scale(1.25); opacity: 0; }
+}
+
+.floating-wa-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: #ff1744;
+  color: #ffffff;
+  font-size: 0.68rem;
+  font-weight: 800;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #06070a;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.floating-wa-tooltip {
+  position: absolute;
+  right: 68px;
+  background: #0d111a;
+  color: #ffffff;
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  padding: 0.4rem 0.85rem;
+  border-radius: 99px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(8px);
+  transition: all 0.2s ease;
+}
+
+.floating-wa-btn:hover .floating-wa-tooltip {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ==========================================================================
+   SISTEMA RESPONSIVO INTEGRAL (TABLETS & SMARTPHONES)
+   ========================================================================== */
+
+/* --- PANTALLAS MEDIANAS / TABLETS (max-width: 992px) --- */
 @media (max-width: 992px) {
   .steps-grid {
     grid-template-columns: 1fr;
+    gap: 1.25rem;
   }
+
   .footer-top-grid {
     grid-template-columns: 1fr 1fr;
+    gap: 2rem;
   }
 }
 
+/* --- DISPOSITIVOS MÓVILES (max-width: 768px) --- */
 @media (max-width: 768px) {
+  :root {
+    --nav-height: 60px;
+  }
+
+  /* Padding horizontal optimizado para móviles */
+  .container {
+    padding-left: 0.85rem;
+    padding-right: 0.85rem;
+  }
+
+  /* Franja superior Demo / Sede compacta */
+  .demo-strip {
+    padding: 0.35rem 0;
+    font-size: 0.72rem;
+  }
+
+  .demo-strip-content {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.35rem;
+  }
+
+  .demo-strip-info {
+    justify-content: space-between;
+    gap: 0.4rem;
+  }
+
+  .sede-selector-group {
+    padding: 0.15rem 0.45rem;
+  }
+
+  .sede-select {
+    font-size: 0.72rem;
+    max-width: 140px;
+  }
+
+  /* Header y Barra de Navegación */
+  .site-header {
+    height: 60px;
+  }
+
+  .brand-you-text {
+    font-size: 1.85rem;
+  }
+
+  .brand-stream-text {
+    font-size: 1.25rem;
+  }
+
   .nav-menu {
     display: none;
   }
+
   .mobile-toggle-btn {
     display: flex;
+    width: 38px;
+    height: 38px;
   }
+
+  .btn-sede-pill {
+    padding: 0.38rem 0.65rem;
+    font-size: 0.72rem;
+    max-width: 110px;
+  }
+
+  .btn-sede-pill #navSedeName {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Botón WhatsApp de la barra: en móvil se muestra como icono circular compacto */
+  #headerWaBtn {
+    padding: 0.45rem;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #headerWaBtn span {
+    display: none;
+  }
+
+  /* Sección Hero en móvil */
+  .hero-section {
+    padding: 1.5rem 0 1rem;
+  }
+
+  .hero-tag {
+    font-size: 0.74rem;
+    padding: 0.28rem 0.7rem;
+  }
+
+  .hero-title {
+    font-size: clamp(1.6rem, 6.5vw, 2.1rem);
+    line-height: 1.2;
+  }
+
+  .hero-subtitle {
+    font-size: 0.88rem;
+    line-height: 1.45;
+  }
+
+  .hero-actions {
+    width: 100%;
+    gap: 0.65rem;
+  }
+
+  .hero-actions .btn {
+    flex: 1 1 calc(50% - 0.5rem);
+    padding: 0.68rem 0.85rem;
+    font-size: 0.82rem;
+    text-align: center;
+  }
+
+  /* Barra de herramientas / Búsqueda y Filtros */
+  .catalog-section {
+    padding: 1rem 0 3.5rem;
+  }
+
+  .catalog-toolbar {
+    padding: 0.85rem;
+    border-radius: 14px;
+    margin-bottom: 1.25rem;
+    gap: 0.75rem;
+  }
+
+  .search-input {
+    padding: 0.65rem 2.2rem 0.65rem 2.5rem;
+    font-size: 0.88rem;
+  }
+
+  .search-icon {
+    left: 0.85rem;
+    width: 18px;
+    height: 18px;
+  }
+
+  .category-filter-list {
+    gap: 0.4rem;
+    padding-bottom: 0.35rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .filter-pill {
+    padding: 0.42rem 0.85rem;
+    font-size: 0.78rem;
+  }
+
+  .toolbar-results-info {
+    font-size: 0.76rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+  }
+
+  /* Tarjetas Gift Cards en Cuadrícula Móvil de 2 Columnas */
+  .gift-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+  }
+
+  .gift-card-item {
+    padding: 3px;
+    border-radius: 14px;
+  }
+
+  .gift-card-face-wrapper {
+    border-radius: 11px;
+    aspect-ratio: 1.22 / 1;
+  }
+
+  .gift-card-info-box {
+    padding: 0.6rem 0.3rem 0.55rem;
+    gap: 0.45rem;
+  }
+
+  .gift-card-title {
+    font-size: 0.74rem;
+    line-height: 1.22;
+    min-height: 1.82rem;
+  }
+
+  .gift-card-price-row {
+    gap: 0.35rem;
+  }
+
+  .gift-card-price-original {
+    font-size: 0.76rem;
+  }
+
+  .gift-card-price-offer {
+    font-size: 1.05rem;
+  }
+
+  .gift-card-actions-row {
+    gap: 0.3rem;
+  }
+
+  .btn-card-buy,
+  .btn-card-renew {
+    font-size: 0.72rem;
+    padding: 0.46rem 0.15rem;
+    letter-spacing: -0.01em;
+  }
+
+  /* Secciones Secundarias */
+  .how-it-works-section,
+  .benefits-section,
+  .faq-section {
+    padding: 2.5rem 0;
+  }
+
+  .section-header {
+    margin-bottom: 2rem;
+  }
+
+  .section-title {
+    font-size: 1.55rem;
+  }
+
+  .step-card {
+    padding: 1.35rem;
+    gap: 0.85rem;
+  }
+
+  .step-number {
+    font-size: 1.75rem;
+  }
+
+  .benefit-card {
+    padding: 1.25rem;
+  }
+
+  .faq-button {
+    padding: 1rem 1.25rem;
+    font-size: 0.95rem;
+  }
+
+  .faq-answer-text {
+    padding: 0 1.25rem 1.15rem;
+    font-size: 0.88rem;
+  }
+
+  /* Footer en Móvil */
+  .site-footer {
+    padding: 2.5rem 0 1.5rem;
+    margin-top: 2.5rem;
+  }
+
   .footer-top-grid {
     grid-template-columns: 1fr;
+    gap: 1.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .footer-bottom-bar {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+}
+
+/* --- TELÉFONOS COMPACTOS (max-width: 520px) --- */
+@media (max-width: 520px) {
+  .container {
+    padding-left: 0.65rem;
+    padding-right: 0.65rem;
+  }
+
+  /* Modal como Bottom Sheet nativo de App Móvil */
+  .modal-backdrop {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .modal-sheet {
+    border-radius: 20px 20px 0 0;
+    max-height: 85vh;
+    border-bottom: none;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.8);
+    animation: modalSheetSlideUp 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes modalSheetSlideUp {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  .modal-header {
+    padding: 1rem 1.15rem;
+  }
+
+  .modal-body {
+    padding: 1.15rem 1rem 2rem;
+  }
+
+  /* Botón Flotante WhatsApp en celulares */
+  .floating-wa-btn {
+    bottom: 16px;
+    right: 16px;
+    width: 54px;
+    height: 54px;
+  }
+
+  .floating-wa-tooltip {
+    display: none; /* En pantallas táctiles no se necesita hover tooltip */
+  }
+
+  .toast-container {
+    bottom: 5.5rem;
+    right: 0.75rem;
+    left: 0.75rem;
+  }
+
+  .toast {
+    width: 100%;
+    justify-content: center;
+    font-size: 0.82rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .benefits-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .sedes-modal-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- TELÉFONOS EXTRA PEQUEÑOS (max-width: 360px) --- */
+@media (max-width: 360px) {
+  .gift-cards-grid {
+    gap: 0.45rem;
+  }
+
+  .gift-card-title {
+    font-size: 0.68rem;
+    min-height: 1.7rem;
+  }
+
+  .gift-card-price-offer {
+    font-size: 0.96rem;
+  }
+
+  .btn-card-buy,
+  .btn-card-renew {
+    font-size: 0.66rem;
+    padding: 0.42rem 0.1rem;
+  }
+
+  .hero-actions .btn {
+    flex: 1 1 100%;
   }
 }

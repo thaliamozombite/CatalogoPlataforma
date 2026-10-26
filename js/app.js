@@ -81,6 +81,7 @@ const dom = {
   heroWaBtn: document.getElementById('heroWaBtn'),
   footerWaBtn: document.getElementById('footerWaBtn'),
   mobileWaBtn: document.getElementById('mobileWaBtn'),
+  floatingWaBtn: document.getElementById('floatingWaBtn'),
 
   // Legal Modal
   legalModal: document.getElementById('legalModal'),
@@ -271,7 +272,7 @@ function initFixedWhatsAppLinks() {
   const generalMsg = CONFIG.messages.generalInquiry(activeSede.name);
   const url = buildWhatsAppUrl(generalMsg, activeSede);
 
-  [dom.headerWaBtn, dom.heroWaBtn, dom.footerWaBtn, dom.mobileWaBtn].forEach(btn => {
+  [dom.headerWaBtn, dom.heroWaBtn, dom.footerWaBtn, dom.mobileWaBtn, dom.floatingWaBtn].forEach(btn => {
     if (btn) {
       btn.href = url;
       btn.setAttribute('target', '_blank');
